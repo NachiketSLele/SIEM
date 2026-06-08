@@ -1,65 +1,48 @@
-# TryHackMe: Splunk — The Basics
+# Splunk: The Basics
 
-> Hands-on introduction to Splunk — its architecture, the web interface,
-> and how logs flow from source to searchable event.
+A short, practical summary of how Splunk works, written from what I learned:
 
-![TryHackMe](https://img.shields.io/badge/-TryHackMe-212C42?style=for-the-badge&logo=tryhackme&logoColor=white)
-![Splunk](https://img.shields.io/badge/-Splunk-000000?style=for-the-badge&logo=splunk&logoColor=white)
+## What is Splunk?
+Splunk is one of the most widely used SIEM platforms. It pulls in logs from
+across a network — servers, endpoints, firewalls — normalises them into a
+consistent format, and makes them searchable in real time. For a SOC analyst,
+that means investigating activity across hundreds of machines from one place,
+instead of logging into each one separately.
 
-**Platform:** TryHackMe &nbsp;|&nbsp; **Tool:** Splunk &nbsp;|&nbsp; **Focus:** SIEM architecture, log ingestion, navigation, SPL basics
+## How Splunk works
+Splunk is built from three components that pass data down a pipeline:
 
-## Overview
-Splunk is one of the most widely used SIEM platforms. It collects machine and
-network logs, normalises them, and makes them searchable in real time so
-analysts can spot and investigate activity quickly. This room was my first
-hands-on look at how Splunk is built and how data moves through it.
+**1. Forwarder** — a lightweight agent installed on the machines you want to
+monitor. It collects logs (Windows Event Logs, PowerShell, Sysmon, Linux logs,
+database activity, web traffic) and sends them on, without slowing the host down.
 
-## How Splunk is structured
-Splunk has three core components that work together to turn raw logs into
-something searchable:
+**2. Indexer** — takes the raw logs from the forwarders and processes them: it
+parses and normalises everything into consistent field-value pairs, then stores
+it as searchable events. This is the step that turns messy, mismatched logs into
+something usable.
 
-**Forwarder** — a lightweight agent on the machine you want to monitor. It
-collects data and ships it to Splunk with minimal impact on the host. Typical
-sources: web servers, Windows hosts (Event Logs, PowerShell, Sysmon), Linux
-hosts, and databases.
+**3. Search Head** — where you actually work. Using SPL (Search Processing
+Language), you query the indexed data, filter it, and turn results into tables
+and charts.
 
-**Indexer** — receives data from forwarders, parses and normalises it into
-field-value pairs, categorises it, and stores it as events. This is the step
-that makes the data searchable.
+In short: **logs → Forwarder (collect) → Indexer (process) → Search Head (analyse).**
 
-**Search Head** — where you query the indexed data, inside the Search &
-Reporting app, using SPL (Search Processing Language). It also turns results
-into tables and visualisations like bar and pie charts.
-
-So the flow is: **source → Forwarder → Indexer → Search Head.**
-
-![Splunk Search & Reporting app](screenshots/search-app.png)
-
-## Navigating the interface
-Areas I got familiar with:
-
-- **Splunk Bar** (top) — messages, settings, search activity, help, and find;
-  also switches between installed apps.
-- **Apps Panel** — installed apps; Search & Reporting is the default.
-- **Explore Splunk** — quick links to add data, add apps, and reach the docs.
-- **Home Dashboard** — empty by default; pick a built-in dashboard or build
-  and pin your own.
-
-![Splunk home screen](screenshots/home.png)
-
-## Hands-on
-[Add 2–3 of your own screenshots from the log-ingestion exercise — adding a
-data source, setting a sourcetype, and running your first search — with a line
-or two on what you ingested and what you found.]
+## SPL — searching the data
+SPL is Splunk's query language. You start by searching an index, then pipe the
+results through commands to filter and shape them — much like chaining commands
+in a Linux terminal. The simplest search is just:
 
     index=main
 
-## Key takeaways
-- Splunk's power comes from the indexer normalising messy logs into consistent
-  field-value pairs — that's what makes fast searching possible.
-- The three-component design maps cleanly onto collect → process → analyse.
-- [One thing that genuinely clicked for you.]
+From there you add commands to count, sort, filter by fields, and build tables.
 
-## Next steps
-- Continue into SPL ("Exploring SPL") to get fluent in searching.
-- Stand up my own Splunk instance and ingest real sample logs as a standalone lab.
+## Why normalisation matters
+The most important idea I took from this room: Splunk's real value isn't storage,
+it's the indexer turning inconsistent logs into uniform field-value pairs. That
+consistency is what makes fast searching — and reliable detection rules — possible.
+
+## Key takeaways
+- Splunk centralises logs from across a network into one searchable platform.
+- Its three components map onto a simple pipeline: collect → process → analyse.
+- Clean, normalised data is the foundation everything else — searching, alerting,
+  dashboards — is built on.
