@@ -44,7 +44,3 @@ logs into uniform field-value pairs. That consistency is what makes fast searchi
 - Splunk centralises logs from across a network into one searchable platform.
 - Its three components map onto a simple pipeline: collect → process → analyse.
 - Clean, normalised data is the foundation everything else is built on.
-
-## Next steps
-- Move into SPL ("Exploring SPL") to get fluent in searching.
-- Stand up my own Splunk instance and ingest sample logs as a standalone lab.
