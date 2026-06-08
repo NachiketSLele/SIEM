@@ -1,9 +1,7 @@
 # Introduction to SIEM
 
 ## Overview
-SIEM — what it is, why a SOCrelies on it, and how it turns scattered logs into detections.
-This was my grounding in the concepts before working hands-on
-with a tool like Splunk.
+SIEM — What it is, why a SOC relies on it, and how it turns scattered logs into detections.
 
 **Focus:** SIEM fundamentals, log sources, correlation, detection rules
 
