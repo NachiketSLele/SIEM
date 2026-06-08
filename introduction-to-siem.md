@@ -1,12 +1,10 @@
-# TryHackMe: Introduction to SIEM
+# Introduction to SIEM
 
 ## Overview
-A theory-focused room introducing SIEM — what it is, why a SOC
-relies on it, and how it turns scattered logs into detections.
+SIEM — what it is, why a SOCrelies on it, and how it turns scattered logs into detections.
 This was my grounding in the concepts before working hands-on
 with a tool like Splunk.
 
-**Platform:** TryHackMe
 **Focus:** SIEM fundamentals, log sources, correlation, detection rules
 
 ## What I learned
