@@ -8,9 +8,9 @@ A hands-on home lab where I deployed a **Wazuh SIEM** manager, onboarded a **Win
 
 ## 📋 Overview
 
-The goal of this lab was to get hands-on with a real SIEM — the kind of platform a SOC analyst lives in. I set up the Wazuh manager on Ubuntu, connected a Windows host as an agent, and configured File Integrity Monitoring so that any change to a watched folder would generate an alert I could see on the dashboard.
+The goal of this lab was to get hands-on with a real SIEM. I set up the Wazuh manager on Ubuntu, connected a Windows host as an agent, and configured File Integrity Monitoring so that any change to a watched folder would generate an alert I could see on the dashboard.
 
-This is the lab most directly tied to where I want to go: a **blue team / SOC analyst** role.
+
 
 ---
 
@@ -23,7 +23,7 @@ This is the lab most directly tied to where I want to go: a **blue team / SOC an
 
 Networking: the Ubuntu VM used a **bridged adapter** so the manager and the Windows agent were on the same network and could communicate.
 
-> 📸 **Screenshot needed:** A simple diagram (Windows agent → Wazuh manager), or the Wazuh dashboard "Agents" page showing the connected agent.
+> **Screenshot:** A simple diagram (Windows agent → Wazuh manager), or the Wazuh dashboard "Agents" page showing the connected agent.
 
 ---
 
@@ -39,12 +39,12 @@ sudo bash ./wazuh-install.sh -a -i
 
 The installer finished by giving me the dashboard URL and admin credentials.
 
-> 📸 **Screenshot needed:** Terminal showing the install completing with the generated credentials (blur the password).
+> **Screenshot:** Terminal showing the install completing with the generated credentials (blur the password).
 
 **2. Accessed the dashboard**
 I logged into the Wazuh dashboard over HTTPS using the Ubuntu VM's IP, accepting the self-signed certificate warning.
 
-> 📸 **Screenshot needed:** Wazuh dashboard home/overview after first login.
+> **Screenshot:** Wazuh dashboard home/overview after first login.
 
 **3. Onboarded the Windows agent**
 I installed the Wazuh agent on a Windows host, generated an agent key on the manager with `manage_agents`, applied that key in the Windows agent, pointed it at the manager's IP, and restarted the agent service. The agent then showed up as **Active** on the dashboard.
@@ -53,8 +53,8 @@ I installed the Wazuh agent on a Windows host, generated an agent key on the man
 sudo /var/ossec/bin/manage_agents   # add agent, extract key
 ```
 
-> 📸 **Screenshot needed:** Wazuh Agent Manager on Windows with the key applied and manager IP set.
-> 📸 **Screenshot needed:** Wazuh dashboard "Agents" page showing the Windows agent as Active.
+> **Screenshot:** Wazuh Agent Manager on Windows with the key applied and manager IP set.
+> **Screenshot:** Wazuh dashboard "Agents" page showing the Windows agent as Active.
 
 **4. Configured File Integrity Monitoring**
 On the Windows agent I edited `ossec.conf` to monitor a specific folder in real time using Syscheck, then restarted the agent to apply it.
@@ -63,12 +63,12 @@ On the Windows agent I edited `ossec.conf` to monitor a specific folder in real 
 <directories realtime="yes">C:\Users\abc\Test</directories>
 ```
 
-> 📸 **Screenshot needed:** The `ossec.conf` snippet showing the monitored directory.
+> **Screenshot:** The `ossec.conf` snippet showing the monitored directory.
 
 **5. Generated and verified alerts**
 I created, modified, and deleted files inside the monitored folder, then went to the **Integrity Monitoring** section of the dashboard and confirmed the alerts appeared for each action.
 
-> 📸 **Screenshot needed:** Integrity Monitoring view showing FIM alerts for the file create/modify/delete events.
+> **Screenshot:** Integrity Monitoring view showing FIM alerts for the file create/modify/delete events.
 
 ---
 
@@ -94,4 +94,3 @@ I created, modified, and deleted files inside the monitored folder, then went to
 ## 📚 References
 
 - Wazuh official documentation
-- Built while following a community home-lab walkthrough, then explored and documented in my own words.
