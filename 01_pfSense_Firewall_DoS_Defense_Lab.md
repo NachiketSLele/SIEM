@@ -25,7 +25,7 @@ This was as much about understanding *network segmentation and traffic flow* as 
 - **WAN**: bridged to my home network so pfSense pulls a real DHCP address.
 - **LAN**: an isolated internal VirtualBox network, with pfSense handing out DHCP addresses and acting as the gateway.
 
-> 📸 **Screenshot needed:** A simple network/topology diagram (I can draw one, or use a VirtualBox network settings screenshot showing the bridged + internal adapters).
+> 📸 **Screenshot:** A simple network/topology diagram (I can draw one, or use a VirtualBox network settings screenshot showing the bridged + internal adapters).
 
 ---
 
@@ -34,19 +34,19 @@ This was as much about understanding *network segmentation and traffic flow* as 
 **1. Built the environment**
 I created three VMs in VirtualBox and gave pfSense two network adapters — one bridged (WAN) and one on an internal network (LAN). Kali went on the WAN side as the attacker; Ubuntu went on the isolated LAN side as the victim.
 
-> 📸 **Screenshot needed:** pfSense VM network settings showing Adapter 1 (Bridged) and Adapter 2 (Internal Network).
+> 📸 **Screenshot:** pfSense VM network settings showing Adapter 1 (Bridged) and Adapter 2 (Internal Network).
 
 **2. Configured pfSense**
 I assigned the interfaces (WAN/LAN), let the WAN grab a DHCP address from my home router, and enabled a DHCP server on the LAN so the Ubuntu victim would get an address automatically. I then logged into the pfSense web GUI to manage everything.
 
-> 📸 **Screenshot needed:** pfSense dashboard showing assigned WAN and LAN interfaces and IP addresses.
-> 📸 **Screenshot needed:** DHCP server configuration page for the LAN.
+> 📸 **Screenshot:** pfSense dashboard showing assigned WAN and LAN interfaces and IP addresses.
+> 📸 **Screenshot:** DHCP server configuration page for the LAN.
 
 **3. Set up reachability for the test**
 To actually demonstrate the attack, I added a temporary firewall rule allowing the Kali host to reach the Ubuntu victim, and added a static route on Kali so it could reach the internal LAN subnet through the pfSense WAN address.
 
-> 📸 **Screenshot needed:** The "allow" firewall rule on the WAN interface.
-> 📸 **Screenshot needed:** Successful ping from Kali to the Ubuntu victim (proof of reachability before the attack).
+> 📸 **Screenshot:** The "allow" firewall rule on the WAN interface.
+> 📸 **Screenshot:** Successful ping from Kali to the Ubuntu victim (proof of reachability before the attack).
 
 **4. Launched the DoS attack**
 From Kali, I used **hping3** to launch flood attacks against the victim (ICMP flood and a SYN flood on a target port). On the Ubuntu side I ran **Wireshark** and watched the packet rate spike dramatically.
@@ -64,9 +64,9 @@ sudo hping3 --flood -S -p 80 <victim-ip>
 **5. Blocked the attack and verified**
 Back in pfSense, I added a **block rule** at the top of the WAN ruleset to drop traffic from the attacker to the victim, with logging enabled. After applying it, the flood stopped — Wireshark went quiet — and I confirmed the blocked traffic in the pfSense firewall logs.
 
-> 📸 **Screenshot needed:** The block rule in pfSense (placed above the allow rule).
-> 📸 **Screenshot needed:** Wireshark *after* the block — traffic back to normal.
-> 📸 **Screenshot needed:** pfSense firewall logs showing the blocked attacker traffic.
+> 📸 **Screenshot** The block rule in pfSense (placed above the allow rule).
+> 📸 **Screenshot** Wireshark *after* the block — traffic back to normal.
+> 📸 **Screenshot:** pfSense firewall logs showing the blocked attacker traffic.
 
 ---
 
@@ -91,4 +91,3 @@ Back in pfSense, I added a **block rule** at the top of the WAN ruleset to drop 
 ## 📚 References
 
 - pfSense official documentation
-- Built while following a community home-lab walkthrough, then explored and documented in my own words.
